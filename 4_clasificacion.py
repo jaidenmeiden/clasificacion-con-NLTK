@@ -3,7 +3,7 @@
 
 # # Clasificación de documentos (email spam o no spam)
 
-# In[1]:
+# In[ ]:
 
 
 import nltk, random
@@ -28,7 +28,7 @@ nltk.download('stopwords')
 # 
 # Con base en eso construye un dataset más grande y con un tokenizado más pulido. 
 
-# In[2]:
+# In[ ]:
 
 
 # Descomprimir ZIP
@@ -38,7 +38,7 @@ fantasy_zip.extractall('datasets/email/plaintext')
 fantasy_zip.close()
 
 
-# In[3]:
+# In[ ]:
 
 
 # Creamos un listado de los archivos dentro del Corpus1 ham/spam
@@ -51,7 +51,7 @@ path_spam = "datasets/email/plaintext/corpus1/spam/"
 filepaths_spam = [path_spam+f for f in listdir(path_spam) if f.endswith('.txt')]
 
 
-# In[4]:
+# In[ ]:
 
 
 # Creamos la funcion para tokenizar y leer los archivos 
@@ -63,7 +63,7 @@ def abrir(texto):
     return data
 
 
-# In[5]:
+# In[ ]:
 
 
 # Creamos la lista tokenizada del ham
@@ -79,7 +79,7 @@ list_spam = list(map(abrir, filepaths_spam))
 
 # 3. **Construye mejores atributos**: A veces no solo se trata de las palabras más frecuentes sino de el contexto, y capturar contexto no es posible solo viendo los tokens de forma individual, ¿que tal si consideramos bi-gramas, tri-gramas ...?, ¿las secuencias de palabras podrián funcionar como mejores atributos para el modelo?. Para ver si es así,  podemos extraer n-gramas de nuestro corpus y obtener sus frecuencias de aparición con `FreqDist()`, desarrolla tu propia manera de hacerlo y entrena un modelo con esos nuevos atributos, no olvides compartir tus resultados en la sección de comentarios. 
 
-# In[6]:
+# In[ ]:
 
 
 # Separamos las palabras mas comunes
@@ -88,7 +88,7 @@ top_words = all_words.most_common(250)
 top_words
 
 
-# In[7]:
+# In[ ]:
 
 
 # Agregamos Bigramas
@@ -98,7 +98,7 @@ top_bigrams = (nltk.FreqDist(bigrams)).most_common(250)
 top_bigrams
 
 
-# In[8]:
+# In[ ]:
 
 
 def document_featuresEmail(document, top_words=top_words, top_bigrams=top_bigrams):
@@ -114,7 +114,7 @@ def document_featuresEmail(document, top_words=top_words, top_bigrams=top_bigram
     return features
 
 
-# In[9]:
+# In[ ]:
 
 
 # Juntamos las listas indicando si tienen palabras de las mas comunes
@@ -126,7 +126,7 @@ random.shuffle(fset)
 len(fset)
 
 
-# In[10]:
+# In[ ]:
 
 
 fset_train, fset_test = fset[:2000], fset[2000:]
@@ -134,20 +134,26 @@ fset_train, fset_test = fset[:2000], fset[2000:]
 classifier = nltk.NaiveBayesClassifier.train(fset_train)
 
 
-# In[11]:
+# In[ ]:
 
 
 classifier.classify(document_featuresEmail(list_ham[34]))
 
 
-# In[12]:
+# In[ ]:
 
 
 print(nltk.classify.accuracy(classifier, fset_test))
 
 
-# In[13]:
+# In[ ]:
 
 
 classifier.show_most_informative_features(5)
+
+
+# In[ ]:
+
+
+get_ipython().system('jupyter nbconvert --to=python 4_clasificacion.ipynb')
 

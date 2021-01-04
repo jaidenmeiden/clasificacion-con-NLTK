@@ -149,3 +149,9 @@ print(nltk.classify.accuracy(classifier2, train2))
 
 print(nltk.classify.accuracy(classifier2, test2))
 
+
+# In[ ]:
+
+
+get_ipython().system('jupyter nbconvert --to=python 1_clasificacion.ipynb')
+

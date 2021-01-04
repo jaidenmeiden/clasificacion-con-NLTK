@@ -101,3 +101,9 @@ df[df['clase']==-1]['contenido']
 
 classifier.show_most_informative_features(5)
 
+
+# In[ ]:
+
+
+get_ipython().system('jupyter nbconvert --to=python 3_clasificacion.ipynb')
+
